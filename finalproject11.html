@@ -1,0 +1,321 @@
+<html>
+<head>
+	<title>Unresponsive Art Finale</title>
+	<script type="text/javascript">
+		var canvas;
+		var context;
+		var triangles = [];
+		var alphabet = [];
+		var a = [];
+		var b = [];
+		var c = [];
+		var particles;
+		var square = [];
+		var timer;
+
+	function init(){
+		canvas = document.getElementById('canvas');
+		context = canvas.getContext('2d');
+
+		resizeCanvas();
+		getInput();
+
+		window.addEventListener('resize', resizeCanvas, false);
+		window.addEventListener('orientationchange', resizeCanvas, false);
+		
+		makeParticles();
+		makeShapes();
+
+		timer = setInterval (moveShapes, 60);
+		var title = makeTitle();
+		drawText(canvas, context, title);
+
+	}
+
+	function makeTitle(){
+		var lines = [['Meditative','Transcendent','Radical','Reflective','Magical'],['Shapes N Stuff','Emotion','BRUH','Bullshit','Rainbow Unicorn'],['I','II','III','IV', '5']];
+		var title = '';
+		for(var i = 0; i<lines.length; i++){
+			var random = Math.floor(Math.random() * lines[i].length);
+			title += lines[i][random] + ' ';
+		}
+		return (title);
+		
+	}
+
+	function drawText(canvas, context, title){
+		context.fillStyle = 'Aqua';
+		context.font = '30px Arial';
+		context.textAlign = 'right';
+		context.fillText(title, canvas.width-20, canvas.height-20);
+	}
+
+	function getInput(){
+
+		for (var i = 0; i < 2; i++) {
+		var decision = prompt('Enter the letter A, B, or C. :)');
+		decision = decision.toUpperCase();
+		alphabet.push(decision);
+
+		}
+	}
+
+	function Alphabet(x, y, color){
+		this.x = canvas.width/2;
+		this.y = canvas.height/2;
+		this.vx = Math.random() * 10 - 5;
+		//some go in different directions than others.
+		this.vy = Math.random() * 10 - 5;
+
+		//give particles a random color
+		var colors = ['red','dodgerblue','blue','crimson','navy','firebrick','white'];
+		var color = colors[Math.floor(Math.random() * colors.length)];
+		this.color = color;
+		this.vx = Math.random() * 10 - 5;
+		this.vy = Math.random() * 10 - 5;
+
+	}
+	function Particle(){
+		this.x = canvas.width/2;
+		this.y = canvas.height/2;
+		this.vx = Math.random() * 10 - 5;
+		//some go in different directions than others.
+		this.vy = Math.random() * 10 - 5;
+
+		var colors = ['red','dodgerblue','blue','crimson','navy','firebrick','white'];
+		this.color = colors[Math.floor(Math.random() * colors.length)];
+		this.radius = 30;
+	}
+
+	function degreesToRadians(degrees){
+			return (degrees * Math.PI)/180;
+		}
+	function makeParticles() {
+		particles = [];
+		for(var i = 0; i < 10; i++){
+			particles.push(new Particle());
+		}
+
+	}
+
+	function drawA(Alphabet){
+		context.beginPath();
+		context.moveTo(this.x, this.y);
+		context.lineTo(this.x + 10, this.y + 50);
+		context.moveTo(this.x + 10, this.y + 50);
+		context.lineTo(this.x + 20, this.y + 0);
+		context.moveTo(this.x + 20, this.y + 0);
+		context.lineTo(this.x + 10, this.y - 50);
+		context.moveTo(this.x + 10, this.y - 50);
+		context.lineTo(this.x - 10, this.y + 0);
+		context.moveTo(this.x - 10, this.y + 0);
+		context.lineTo(this.x - 10, this.y + 15);
+		context.moveTo(this.x - 10, this.y + 15);
+		context.lineTo(this.x - 10, this.y + 0);
+		context.moveTo(this.x - 10, this.y + 0);
+		context.lineTo(this.x - 10, this.y - 15);
+		context.moveTo(this.x - 10, this.y - 15);
+		context.lineTo(this.x, this.y);
+		context.fillStyle = this.color;
+		context.fill();
+	}
+
+	function drawB(Alphabet){
+		context.beginPath();
+		context.moveTo(this.x, this.y);
+		context.lineTo(this.x + 0, this.y + 50);
+		context.moveTo(this.x + 0, this.y + 50);
+		context.lineTo(this.x + 25, this.y - 15);
+		context.moveTo(this.x + 25, this.y - 15);
+		context.lineTo(this.x - 20, this.y - 10);
+		context.moveTo(this.x - 20, this.y - 10);
+		context.lineTo(this.x + 20, this.y - 10);
+		context.moveTo(this.x + 20, this.y - 10);
+		context.lineTo(this.x - 25, this.y - 15);
+		context.fillStyle = this.color;
+		context.fill();
+	}
+
+	function drawC(Alphabet){
+		context.beginPath();
+		context.moveTo(this.x, this.y);
+		context.lineTo(this.x + 0, this.y + 50);
+		context.moveTo(this.x + 0, this.y + 50);
+		context.lineTo(this.x + 50, this.y + 0);
+		context.moveTo(this.x + 50, this.y + 0);
+		context.lineTo(this.x + 0, this.y - 10);
+		context.moveTo(this.x + 0, this.y - 10);
+		context.lineTo(this.x - 40, this.y + 0);
+		context.moveTo(this.x - 40, this.y + 0);
+		context.lineTo(this.x + 0, this.y - 30);
+		context.moveTo(this.x + 0, this.y - 30);
+		context.lineTo(this.x + 40, this.y + 0);
+		context.moveTo(this.x + 40, this.y + 0);
+		context.lineTo(this.x + 0, this.y - 10);
+		context.moveTo(this.x + 0, this.y - 10);
+		context.lineTo(this.x - 50, this.y + 0);
+		context.fillStyle = this.color;
+		context.fill();
+	}
+
+	function Triangle(x, y, color){
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.vx = Math.random() * 10 - 5;
+		this.vy = Math.random() * 10 - 5;
+		
+	}
+
+	function drawTriangle(triangle){
+		context.beginPath();
+		context.moveTo(triangle.x, triangle.y); 
+		context.lineTo(triangle.x + 50, triangle.y + 50); 
+		context.lineTo(triangle.x + 50, triangle.y - 50);
+		context.fillStyle = triangle.color;
+		context.fill();
+	}
+
+	function Square(x, y, color){
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		this.vx = Math.random() * 10 - 5;
+		this.vy = Math.random() * 10 - 5;
+	}
+
+	function drawSquare(x, y, color){
+		var dasWidth = Math.floor(Math.random() * 70);
+		var dasHeight = Math.floor(Math.random() * 70);
+		context.beginPath;
+		context.rect(this.x, this.y, dasWidth, dasHeight, 0, true);
+		context.fillStyle = color;
+		context.fill();
+
+	}
+	
+	function makeShapes(x, y, color){
+
+			//push A
+
+			if (alphabet.includes('A')){
+				for (i = 0; i < 10; i++)
+					a.push(new Alphabet);
+					drawA();
+			}
+
+			//push B
+
+			if (alphabet.includes('B')){
+				for (i = 0; i < 10; i++)
+					b.push(new Alphabet);
+					drawB();
+			}
+
+			//push C
+
+			if (alphabet.includes('C')){
+				for (i = 0; i < 10; i++)
+					c.push(new Alphabet);
+					drawC();
+			}
+
+			//push triangles
+
+			for (i = 0; i < 10; i++){
+				triangles.push(new Triangle(x, y, color));
+			}
+
+			//push square
+
+			for (i = 0; i < 10; i++){
+				square.push(new Square(x, y, color));
+			}
+		return x, y, color;
+	}
+		function moveShapes(){
+			/*context.globalCompositeOperation = 'source-over';
+			context.fillStyle = 'rgba(0,0,0,0.3)';
+			context.fillRect(0,0,canvas.width,canvas.height);
+			context.globalCompositeOperation = 'lighter';*/
+
+			
+			for (var i = 0; i < particles.length; i++) {
+			var p = particles[i];
+			context.beginPath();
+			context.arc(p.x, p.y, p.radius, 0, degreesToRadians(360), true);
+			context.fillStyle = p.color;
+			context.fill();
+
+			//move the particle
+				p.x += p.vx;
+				p.y += p.vy;
+
+				if (p.x < -50){
+					p = false;
+				}
+				if (p.y < -50){
+					p = false;
+				}
+				if (p.x > canvas.width + 50){
+					p = false;
+				}
+				if (p.y > canvas.height + 50){
+					p = false;
+				}
+				if(p.radius===0)
+					p=false;
+			}
+
+			//drawSquare();move the triangle... IF THEY SHOWED UP
+
+			for (var i=0; i < triangles.length; i++){
+			var t = triangles[i];
+			drawTriangle(t);
+				for (var j = 0; j < 1; j++){
+					triangles[i].x += triangles[i].vx;
+					triangles[i].y += triangles[i].vy;
+					var tm = triangles[i]
+					if (tm.x + tm.vx > canvas.width || tm.x + tm.vx < 0)
+    					t = false;
+  					if (tm.y + tm.vy > canvas.height || tm.y + tm.vy < 0)
+    					t = false;
+				}
+			}
+			for (var i=0; i < square.length; i++){
+			var s = square[i];
+			drawSquare(s);
+				for (var j = 0; j < 1; j++){
+					square[i].x += square[i].vx;
+					square[i].y += square[i].vy;
+					var ts = square[i]
+					if (ts.x + ts.vx > canvas.width || ts.x + ts.vx < 0)
+    					s = false;
+  					if (ts.y + ts.vy > canvas.height || ts.y + ts.vy < 0)
+    					s = false;
+				}
+			}
+		}
+
+
+
+	function resizeCanvas(){
+		canvas.width = window.innerWidth-15;
+		canvas.height = window.innerHeight-15;
+		//remember if you fill here it takes more work
+		fillBackgroundColor(); 
+	}
+
+	function fillBackgroundColor(){
+		//make background black
+		context.fillStyle = 'black';
+		context.fillRect(0,0, canvas.width, canvas.height);
+	}
+	window.onload = init;
+
+
+	</script>
+</head>
+<body>
+	<canvas id = "canvas" width="500" height="500"></canvas>
+</body>
